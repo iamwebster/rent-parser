@@ -1,16 +1,22 @@
-from parser_cian import rent_qty
 import json
+import os
 
 
-def save_data(data):
-    with open('data.json', 'w') as outfile:
-        outfile.write('[')
+def save_data(*args):
 
-    for data_count in range(rent_qty):
-        with open('data.json', 'a', encoding='utf-8') as outfile:
-            json.dump(next(data), outfile, indent=4, ensure_ascii=False)
-            if data_count + 1 != rent_qty:
+    cwd = os.getcwd()
+    filepath = os.path.join(cwd, 'data.json')
+
+    if not os.path.exists(filepath):
+        with open('data.json', 'w') as outfile:
+                outfile.write('[')
+
+    for generator_item in args:
+        for data in generator_item():
+            with open('data.json', 'a', encoding='utf-8') as outfile:
+                json.dump(data, outfile, indent=4, ensure_ascii=False)
                 outfile.write(',')
-
+        
     with open('data.json', 'a') as outfile:
         outfile.write(']')
+        

@@ -1,3 +1,4 @@
 venv
 __pycache__
-parser_n1.py
+data.json
+test.py
